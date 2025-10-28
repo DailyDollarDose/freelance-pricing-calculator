@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Freelance Gig Pricing Calculator — DailyDollarDose</title>
+  <meta name="description" content="Fast freelance pricing calculator for students. Manual rate + niche algorithm, experience multipliers, shareable results, Fiverr CTA. Powered by DailyDollarDose." />
+  <meta name="keywords" content="freelance pricing calculator, gig price calculator, student freelance earnings, Fiverr pricing, gig pricing tool" />
+  <meta name="author" content="DailyDollarDose" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Freelance Gig Pricing Calculator — DailyDollarDose" />
+  <meta property="og:description" content="Calculate recommended prices for freelance gigs using niche + experience multipliers. Save, share, and launch gigs on Fiverr." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTCVr2_vD9F_HnpFRL8VK8zi9kK1b0-mFiNOqZHkv2_klaJkSEgmL0x2p16Un5OTDSGYQ7OZm9vsVQAB11fexORNOUd9mkAToDKw1ILAUKwIUfuYYgS4bThLiyC6jgGd-EEYxhYKo8gwMthy7XMmJsrboJK8fcss29WeieXLUf5lUAr8t_euiX4yYkRou_/s320/ChatGPT%20Image%20Oct%2022,%202025,%2006_55_23%20AM.png" />
+  <meta property="og:url" content="" />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Freelance Gig Pricing Calculator — DailyDollarDose" />
+  <meta name="twitter:description" content="Manual rate + niche multiplier pricing tool for students. Fiverr CTA and shareable results." />
+  <meta name="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTCVr2_vD9F_HnpFRL8VK8zi9kK1b0-mFiNOqZHkv2_klaJkSEgmL0x2p16Un5OTDSGYQ7OZm9vsVQAB11fexORNOUd9mkAToDKw1ILAUKwIUfuYYgS4bThLiyC6jgGd-EEYxhYKo8gwMthy7XMmJsrboJK8fcss29WeieXLUf5lUAr8t_euiX4yYkRou_/s320/ChatGPT%20Image%20Oct%2022,%202025,%2006_55_23%20AM.png" />
+
+  <!-- Favicon (uses your hosted image) -->
+  <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTCVr2_vD9F_HnpFRL8VK8zi9kK1b0-mFiNOqZHkv2_klaJkSEgmL0x2p16Un5OTDSGYQ7OZm9vsVQAB11fexORNOUd9mkAToDKw1ILAUKwIUfuYYgS4bThLiyC6jgGd-EEYxhYKo8gwMthy7XMmJsrboJK8fcss29WeieXLUf5lUAr8t_euiX4yYkRou_/s320/ChatGPT%20Image%20Oct%2022,%202025,%2006_55_23%20AM.png" />
+
+  <style>
+    :root{
+      --bg:#000;
+      --card:#0f1720;
+      --muted:#9aa3ad;
+      --accent:#00FF0A; /* neon green accent */
+      --radius:14px;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body.light {
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#00FF0A;
+      --glass: rgba(0,0,0,0.04);
+    }
+
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:980px;margin:28px auto;padding:20px}
+    .card{
+      max-width:460px;margin:0 auto;background:var(--card);border-radius:16px;padding:20px;box-shadow:0 10px 40px rgba(2,6,23,0.6);overflow:hidden;
+    }
+
+    header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+    header img{width:56px;height:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.03)}
+    header h1{font-size:20px;margin:0;color:var(--accent);letter-spacing:0.2px}
+    header p{margin:0;font-size:13px;color:var(--muted)}
+
+    form{margin-top:14px;display:grid;gap:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    input[type=number], select, .text {
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:var(--accent);font-size:14px;
+      outline:none;box-sizing:border-box;
+    }
+    body.light input[type=number], body.light select, body.light .text{background:#fff;color:#000;border:1px solid #eef2ff}
+    .hint{font-size:12px;color:var(--muted)}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),#7cff73);color:#000;font-weight:700;cursor:pointer;
+      width:100%;justify-content:center;
+    }
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:600;padding:9px 12px}
+
+    /* result card */
+    .resultBox{margin-top:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .priceRow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .price{font-size:20px;font-weight:800;color:#fff}
+    .sub{font-size:12px;color:var(--muted)}
+
+    /* skeleton loader */
+    .skeleton{height:56px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06), rgba(255,255,255,0.02));animation:shimmer 1.2s infinite}
+    @keyframes shimmer{0%{background-position:-300px 0}100%{background-position:300px 0}}
+
+    /* toast */
+    .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:28px;background:#111;padding:10px 16px;border-radius:10px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,0.6);opacity:0;pointer-events:none;transition:all .25s}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);pointer-events:auto}
+
+    /* share row */
+    .shareRow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .shareBtn{flex:1;padding:9px;border-radius:10px;border:0;background:#111;color:var(--accent);cursor:pointer;font-weight:700}
+    body.light .shareBtn{background:#fff;color:var(--accent);border:1px solid #eee}
+
+    footer{margin-top:14px;font-size:12px;color:var(--muted);text-align:center}
+    .small{font-size:12px;color:var(--muted);margin-top:6px}
+
+    /* responsive */
+    @media (max-width:520px){.card{padding:14px;width:92%}header h1{font-size:18px} .price{font-size:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application" aria-label="Freelance Gig Pricing Calculator">
+      <header>
+        <img alt="DailyDollarDose logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTCVr2_vD9F_HnpFRL8VK8zi9kK1b0-mFiNOqZHkv2_klaJkSEgmL0x2p16Un5OTDSGYQ7OZm9vsVQAB11fexORNOUd9mkAToDKw1ILAUKwIUfuYYgS4bThLiyC6jgGd-EEYxhYKo8gwMthy7XMmJsrboJK8fcss29WeieXLUf5lUAr8t_euiX4yYkRou_/s320/ChatGPT%20Image%20Oct%2022,%202025,%2006_55_23%20AM.png" />
+        <div style="flex:1;text-align:left">
+          <h1>Freelance Gig Pricing Calculator</h1>
+          <p class="hint">Manual rate + niche algorithm • Students & beginners</p>
+        </div>
+      </header>
+
+      <form id="calcForm" onsubmit="return false" autocomplete="off">
+        <div>
+          <label for="rate">Hourly rate (USD)</label>
+          <input id="rate" type="number" min="0" step="0.25" inputmode="decimal" placeholder="e.g. 12" />
+          <div class="hint">Enter what you want to charge per hour.</div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="hours">Estimated hours</label>
+            <input id="hours" type="number" min="0.25" step="0.25" placeholder="e.g. 4" />
+          </div>
+          <div class="col">
+            <label for="revisions">Revisions</label>
+            <select id="revisions">
+              <option value="1">1 revision</option>
+              <option value="1.12" selected>2 revisions</option>
+              <option value="1.25">3 revisions</option>
+              <option value="1.4">Unlimited</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="experience">Experience level</label>
+            <select id="experience">
+              <option value="0.10">Beginner +10%</option>
+              <option value="0.25" selected>Intermediate +25%</option>
+              <option value="0.45">Pro +45%</option>
+              <option value="0.70">Expert +70%</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="niche">Gig niche</label>
+            <select id="niche">
+              <option value="0.20">Social Media Management +20%</option>
+              <option value="0.35">Graphic Designing +35%</option>
+              <option value="0.30">Video Editing +30%</option>
+              <option value="0.50">Web Development +50%</option>
+              <option value="0.15">Content Writing +15%</option>
+              <option value="0.25">UI/UX Designing +25%</option>
+              <option value="0.40">Software Development +40%</option>
+              <option value="0.30">SEO Services +30%</option>
+              <option value="0.20">Customer Support +20%</option>
+              <option value="0.45">3D Animation +45%</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button id="calculateBtn" class="btn" type="button">Calculate Price</button>
+          <button id="clearBtn" class="ghost" type="button" title="Reset">Reset</button>
+        </div>
+      </form>
+
+      <!-- result -->
+      <div id="resultArea" class="resultBox" aria-live="polite" style="display:none">
+        <div id="skeleton" class="skeleton" style="display:none"></div>
+
+        <div id="pricePanel" style="display:none">
+          <div class="priceRow">
+            <div>
+              <div class="sub">Suggested hourly</div>
+              <div id="suggestedHourly" class="sub" style="color:var(--accent);font-weight:700">—</div>
+            </div>
+            <div style="text-align:right">
+              <div class="sub">Total package</div>
+              <div id="finalPrice" class="price">—</div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="sub">Competitor range</div>
+            <div id="range" class="hint">—</div>
+          </div>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button id="copyBtn" class="ghost" style="flex:1">Copy price</button>
+            <a id="fiverrBtn" class="btn" href="https://www.fiverr.com/" target="_blank" rel="noopener noreferrer" style="flex:1">Start on Fiverr</a>
+          </div>
+
+          <div class="shareRow">
+            <button id="shareWhats" class="shareBtn">WhatsApp</button>
+            <button id="shareFb" class="shareBtn">Facebook</button>
+            <button id="shareSnap" class="shareBtn">Snapchat</button>
+          </div>
+
+          <div class="small">Results saved to this device. Edit any input and recalculate.</div>
+        </div>
+      </div>
+
+      <div class="small">Tip: Use the Fiverr CTA to convert visitors into signups. Replace link with your affiliate URL in the HTML.</div>
+
+      <footer>Powered by DailyDollarDose</footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /***********************
+     * Helper & UI binding
+     ***********************/
+    const $ = id => document.getElementById(id);
+
+    const rateEl = $('rate');
+    const hoursEl = $('hours');
+    const revEl = $('revisions');
+    const expEl = $('experience');
+    const nicheEl = $('niche');
+
+    const calcBtn = $('calculateBtn');
+    const clearBtn = $('clearBtn');
+    const resultArea = $('resultArea');
+    const skeleton = $('skeleton');
+    const pricePanel = $('pricePanel');
+    const finalPriceEl = $('finalPrice');
+    const suggestedHourlyEl = $('suggestedHourly');
+    const rangeEl = $('range');
+    const copyBtn = $('copyBtn');
+    const toast = $('toast');
+    const shareWhats = $('shareWhats');
+    const shareFb = $('shareFb');
+    const shareSnap = $('shareSnap');
+    const fiverrBtn = $('fiverrBtn');
+
+    const LS_KEY = 'ddd_pricing_v1';
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 1800);
+    }
+
+    function showSkeleton(show=true){
+      skeleton.style.display = show ? 'block' : 'none';
+      pricePanel.style.display = show ? 'none' : 'block';
+    }
+
+    function formatUSD(n){
+      return '$' + Number(n).toLocaleString(undefined, {maximumFractionDigits:0});
+    }
+
+    function saveToLocal(inputs){
+      try{
+        localStorage.setItem(LS_KEY, JSON.stringify(inputs));
+      }catch(e){}
+    }
+    function loadFromLocal(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return null;
+        return JSON.parse(raw);
+      }catch(e){return null}
+    }
+
+    function validateInputs(rate, hours){
+      const errors = [];
+      if(isNaN(rate) || rate <= 0) errors.push('Enter a valid hourly rate.');
+      if(isNaN(hours) || hours <= 0) errors.push('Enter estimated hours.');
+      return errors;
+    }
+
+    function computePricing({rate, hours, experience, nicheMultiplier, revisionMultiplier}){
+      // Base calculations:
+      const base = rate * hours;
+
+      // Suggested hourly is a middle value influenced by niche & experience
+      const suggestedHourly = Math.round((rate * (1 + (experience + nicheMultiplier)/2)));
+
+      // Platform fee (10%) and revision multiplier are applied to base
+      const platformFee = base * 0.10;
+      const final = Math.round(base + base * experience + base * nicheMultiplier + platformFee);
+      
+      // Competitor range: compute a conservative low and high
+      const low = Math.round((rate * 0.6) * hours);
+      const high = Math.round((rate * 1.6 + (nicheMultiplier*rate)) * hours * Math.max(1.0, 1 + experience/2));
+
+      return { suggestedHourly, final, low, high };
+    }
+
+    /***********************
+     * UI flow
+     ***********************/
+    // Prefill from localStorage if present
+    (function prefill(){
+      const saved = loadFromLocal();
+      if(saved){
+        rateEl.value = saved.rate || '';
+        hoursEl.value = saved.hours || '';
+        revEl.value = saved.revisions || '1.12';
+        expEl.value = saved.experience || '0.25';
+        nicheEl.value = saved.niche || '0.20';
+      }
+    })();
+
+    function renderResult(model){
+      // show skeleton loader for a short moment for UX
+      resultArea.style.display = 'block';
+      showSkeleton(true);
+      pricePanel.style.display = 'none';
+      setTimeout(()=>{
+        const { suggestedHourly, final, low, high } = model;
+        suggestedHourlyEl.textContent = formatUSD(suggestedHourly) + ' / hr';
+        finalPriceEl.textContent = formatUSD(final);
+        rangeEl.textContent = formatUSD(low) + ' — ' + formatUSD(high);
+
+        showSkeleton(false);
+        pricePanel.style.display = 'block';
+        // Save inputs
+        saveToLocal({
+          rate: Number(rateEl.value),
+          hours: Number(hoursEl.value),
+          revisions: revEl.value,
+          experience: expEl.value,
+          niche: nicheEl.value
+        });
+        // update fiverr CTA UTM (example) - replace YOUR_AFF_ID if you have one
+        fiverrBtn.href = 'https://www.fiverr.com/?source=calculator';
+      }, 650);
+    }
+
+    calcBtn.addEventListener('click', ()=>{
+      const rate = parseFloat(rateEl.value);
+      const hours = parseFloat(hoursEl.value);
+      const experience = parseFloat(expEl.value);
+      const nicheMultiplier = parseFloat(nicheEl.value);
+      const revisionMultiplier = parseFloat(revEl.value);
+
+      const errors = validateInputs(rate, hours);
+      if(errors.length){
+        showToast(errors[0]);
+        return;
+      }
+
+      // compute model
+      const model = computePricing({rate, hours, experience, nicheMultiplier, revisionMultiplier});
+      renderResult(model);
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      rateEl.value = '';
+      hoursEl.value = '';
+      revEl.value = '1.12';
+      expEl.value = '0.25';
+      nicheEl.value = '0.20';
+      resultArea.style.display = 'none';
+      localStorage.removeItem(LS_KEY);
+      showToast('Reset');
+    });
+
+    // copy with visual confirmation
+    copyBtn.addEventListener('click', async ()=>{
+      const txt = `${$('finalPrice').textContent} — ${$('suggestedHourly').textContent}`;
+      if(!txt || txt.includes('—')){ showToast('No result to copy'); return; }
+      try{
+        await navigator.clipboard.writeText(txt);
+        showToast('Price copied');
+      }catch(e){
+        showToast('Copy failed');
+      }
+    });
+
+    // sharing
+    shareWhats.addEventListener('click', ()=>{
+      if(!finalPriceEl.textContent) { showToast('Calculate first'); return; }
+      const text = encodeURIComponent(`Gig Price: ${finalPriceEl.textContent}\nHourly: ${suggestedHourlyEl.textContent}\nGenerated with DailyDollarDose`);
+      const url = `https://wa.me/?text=${text}`;
+      window.open(url,'_blank');
+    });
+
+    shareFb.addEventListener('click', ()=>{
+      if(!finalPriceEl.textContent) { showToast('Calculate first'); return; }
+      const url = encodeURIComponent(location.href);
+      const quote = encodeURIComponent(`Recommended gig price: ${finalPriceEl.textContent} — Generated with DailyDollarDose`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`,'_blank');
+    });
+
+    shareSnap.addEventListener('click', ()=>{
+      if(!finalPriceEl.textContent) { showToast('Calculate first'); return; }
+      // Snapchat share has limited public sharing; fallback to copying link & instructing user
+      const shareText = `Recommended price: ${finalPriceEl.textContent} — via DailyDollarDose`;
+      navigator.clipboard.writeText(shareText).then(()=> {
+        showToast('Result copied — paste into Snapchat');
+      }).catch(()=> showToast('Copy failed'));
+    });
+
+    // keyboard: Enter triggers calculate
+    ['rate','hours'].forEach(id=>{
+      $(id).addEventListener('keydown', e=>{
+        if(e.key === 'Enter'){ calcBtn.click(); e.preventDefault(); }
+      });
+    });
+
+    // Theme toggle (double-click header for power users)
+    document.querySelector('.toggle').addEventListener('click', ()=>{
+      document.body.classList.toggle('light');
+      showToast('Theme toggled');
+    });
+
+    // If navigator.share is available, attach to a long-press share (optional)
+    if (navigator.share) {
+      const shareAll = document.createElement('button');
+      shareAll.textContent = 'Share (system)';
+      shareAll.className = 'shareBtn';
+      shareAll.style.marginTop = '8px';
+      shareAll.onclick = async () => {
+        if(!finalPriceEl.textContent){ showToast('Calculate first'); return; }
+        try{
+          await navigator.share({
+            title: 'Gig price — DailyDollarDose',
+            text: `${finalPriceEl.textContent} — ${suggestedHourlyEl.textContent}`,
+            url: location.href
+          });
+        }catch(e){}
+      };
+      document.querySelector('.shareRow').appendChild(shareAll);
+    }
+
+    // Accessibility: focus management after calculate
+    calcBtn.addEventListener('click', ()=>{ setTimeout(()=> finalPriceEl.focus && finalPriceEl.focus(), 800); });
+
+    // On load: indicate saved if present
+    window.addEventListener('load', ()=>{
+      const saved = loadFromLocal();
+      if(saved) showToast('Loaded your last inputs');
+    });
+  </script>
+</body>
+</html>
